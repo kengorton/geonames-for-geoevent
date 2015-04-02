@@ -204,8 +204,15 @@ public class GeoNamesOSMPOIProcessor extends GeoEventProcessorBase implements Ge
 	
 	private void createOSMPOIGeoEvent(GeoEvent geoEvent, String jsonResponse) throws JSONException, MessagingException
 	{
-		JSONObject jsonObj = new JSONObject(jsonResponse);			
-		JSONArray geonamesSONArray = jsonObj.getJSONArray("poi");	
+		JSONObject jsonObj = new JSONObject(jsonResponse);
+		JSONArray geonamesSONArray = null;	
+		try{
+			geonamesSONArray = jsonObj.getJSONArray("poi");	
+		}
+		catch(JSONException jex){
+		  //LOGGER.info(jex.getMessage(), jex);
+			return;
+		}	
 		//LOGGER.info("OSMPOI response: " + jsonResponse);
 		for (int i=0;i<geonamesSONArray.length();i++)
 		  {
